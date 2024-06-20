@@ -6,7 +6,7 @@ import { faker } from '@faker-js/faker';
 
 const description = faker.person.firstName();
 
-//test 02
+//test 02 - Post todoItems API with String descriptions
 test('Post API of ToDoItems', async ({ request }) => {
     console.log("--------------------Starting test 02 -------------------");
     const response = await request.post(`/api/todoItems`, {
@@ -15,6 +15,7 @@ test('Post API of ToDoItems', async ({ request }) => {
         }
     });
     console.log(await response.json());
+    //Assertions to check the status and responses.
     expect(response.ok()).toBeTruthy();
     expect(response.status()).toBe(201);
     const responseBody = await response.json();
