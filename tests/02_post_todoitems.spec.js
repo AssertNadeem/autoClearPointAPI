@@ -4,7 +4,7 @@ const { test, expect } = require('@playwright/test');
 import { faker } from '@faker-js/faker';
 
 
-const description = faker.person.firstName()
+const description = faker.person.firstName();
 
 //test 02
 test('Post API of ToDoItems', async ({ request }) => {
@@ -22,7 +22,25 @@ test('Post API of ToDoItems', async ({ request }) => {
   
 });
 
-//test 03
+
+const newdescription = faker.number.int();
+
+//test 02 - This test passes Integer instead of String.
+test('Post API of ToDoItems - Negative tests', async ({ request }) => {
+    console.log("--------------------Starting test 02 -------------------");
+    const response = await request.post(`/api/todoItems`, {
+        data: {
+            "description": newdescription
+        }
+    });
+    console.log(await response.json());
+    expect(response.status()).toBe(400);
+    const responseBody = await response.json();
+    expect(responseBody).toHaveProperty("title", "One or more validation errors occurred.");
+
+});
+
+//test 04
 test('Get API with Params multiple apis', async ({ request }) => {
     console.log("--------------------Starting test 03 -------------------");
 
